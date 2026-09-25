@@ -86,12 +86,23 @@ dependencies.
 The FPN announcer is a custom voice designed with Gemini 3.8 TTS voice design. The prompt was *"a booming,
 relentlessly cheerful 1950s wartime newsreel announcer…"*, and each line gets its own delivery style (breezy,
 urgent-but-cheerful, deadpan PSA, solemn defeat). The lines are pre-rendered to `public/voice/`. In game they play
-through a band-limited "old radio" filter and duck the music. A line without a clip falls back to the browser's
-speech voice.
+through a band-limited "old radio" filter and duck the music. A line without a clip only appears on the ticker.
 
 ```bash
 GEMINI_API_KEY=... node tools/design-voice.mjs preview.wav   # design a new announcer → tools/voice.json
 GEMINI_API_KEY=... node tools/gen-voice.mjs                  # render missing lines (--force: all)
+```
+
+## Promo films
+
+`promo/` stages scripted scenes on live simulations and records them. The YouTube recruitment film and the two
+9:16 shorts share the same pipeline: the video renders frame by frame (WebCodecs H.264), then the logged sound
+cues are replayed through the real audio engine.
+
+```bash
+node tools/serve.mjs --allow-save --port=5198   # then open /promo/?format=trailer|whimsy|explainer
+# click ① Render video, then ② Render audio, then:
+bash promo/mux.sh plastic-front-trailer-16x9
 ```
 
 ## Development

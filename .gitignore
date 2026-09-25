@@ -6,3 +6,4 @@ coverage/
 *.log
 .claude/
 promo/out/
+promo/*.mp4

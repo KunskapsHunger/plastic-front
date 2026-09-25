@@ -22,7 +22,7 @@ function saveName(n) {
 }
 
 /** A saluting green army man for the poster, drawn as inline SVG. */
-function posterArt() {
+export function posterArt({ caption = true } = {}) {
   const ns = 'http://www.w3.org/2000/svg';
   const svg = document.createElementNS(ns, 'svg');
   svg.setAttribute('viewBox', '0 0 300 420');
@@ -55,6 +55,7 @@ function posterArt() {
   add('circle', { cx: 152, cy: 128, r: 30, fill: g, stroke: o, 'stroke-width': 5 });
   add('path', { d: 'M112 124 Q152 60 192 124 L200 130 L104 130Z', fill: '#8cc463', stroke: o, 'stroke-width': 5 });
   add('path', { d: 'M232 118 L246 104', stroke: o, 'stroke-width': 8, 'stroke-linecap': 'round' });
+  if (!caption) return svg;
   add('rect', { x: 20, y: 300, width: 260, height: 60, rx: 10, fill: '#f3e6c8', stroke: '#2a2420', 'stroke-width': 6, transform: 'rotate(-6 150 330)' });
   const t = add('text', {
     x: 150, y: 342, 'text-anchor': 'middle', 'font-family': 'Bangers, Impact, sans-serif', 'font-size': 38,

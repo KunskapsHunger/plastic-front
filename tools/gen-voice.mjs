@@ -23,8 +23,11 @@ const MAX_RETRIES = 6;
 // Text is spoken verbatim; delivery goes in speech_metadata.style (never spoken), per line.
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
-const OUT_DIR = process.env.VOICE_OUT || join(ROOT, 'public', 'voice');
-const { VOICE_LINES, styleFor } = await import('../src/shared/voicelines.js');
+const OUT_DIR = process.env.VOICE_OUT ? join(ROOT, process.env.VOICE_OUT) : join(ROOT, 'public', 'voice');
+// VOICE_LINES_MODULE (relative to the repo root) swaps in another script, e.g. promo/voicelines.js.
+const LINES_MODULE = process.env.VOICE_LINES_MODULE
+  ? new URL(`../${process.env.VOICE_LINES_MODULE}`, import.meta.url).href : '../src/shared/voicelines.js';
+const { VOICE_LINES, styleFor } = await import(LINES_MODULE);
 
 class QuotaError extends Error {}
 

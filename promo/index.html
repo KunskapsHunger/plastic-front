@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Plastic Front: Promo Director</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Bangers&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    html, body { margin: 0; height: 100%; background: #1a120c; color: #f3e6c8; font: 14px 'Oswald', sans-serif; overflow: hidden; }
+    #ad { position: fixed; left: 0; right: 0; bottom: 0; margin: auto; top: 44px; max-width: 100vw; max-height: calc(100vh - 44px); }
+    #bar { position: fixed; top: 0; left: 0; right: 0; height: 44px; display: flex; gap: 8px; align-items: center; padding: 0 10px; background: #1f2a44; }
+    button { font: inherit; padding: 6px 12px; background: #2e3d63; color: #f3e6c8; border: 1px solid #5a6a90; border-radius: 4px; cursor: pointer; }
+    button.rec { background: #c8352b; }
+    #status { margin-left: auto; }
+  </style>
+</head>
+<body>
+  <div id="bar">
+    <b>PROMO DIRECTOR</b>
+    <button id="sheet">Contact sheet</button>
+    <button id="video" class="rec">① Render video</button>
+    <button id="audio" class="rec">② Render audio</button>
+    <span id="status">loading…</span>
+  </div>
+  <canvas id="ad"></canvas>
+  <script type="module">
+    import { Director } from './director.js';
+    const format = new URLSearchParams(location.search).get('format') || 'trailer';
+    const mod = await import(`./shots-${format}.js`);
+    const status = document.getElementById('status');
+    const say = (s) => (status.textContent = `${format}: ${s}`);
+    let director;
+    const fresh = async () => {
+      director = new Director(document.getElementById('ad'), mod.CONFIG);
+      director.onStatus = say;
+      await director.prepare();
+      window.__director = director;
+      say(`ready (${mod.CONFIG.width}×${mod.CONFIG.height}, ${mod.CONFIG.duration}s)`);
+    };
+    await fresh();
+    const job = (fn) => async () => {
+      try {
+        window.__result = await fn();
+      } catch (err) {
+        console.error(err);
+        window.__result = `ERROR ${err.message}`;
+      }
+      const result = window.__result;
+      await fresh();
+      say(result);
+    };
+    window.__jobs = {
+      sheet: job(() => director.renderVideo({ every: 45 })),
+      video: job(() => director.renderVideo()),
+      audio: job(() => director.renderAudio()),
+    };
+    document.getElementById('sheet').onclick = window.__jobs.sheet;
+    document.getElementById('video').onclick = window.__jobs.video;
+    document.getElementById('audio').onclick = window.__jobs.audio;
+  </script>
+</body>
+</html>

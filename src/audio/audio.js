@@ -578,6 +578,16 @@ export class GameAudio {
     });
   }
 
+  /** A MediaStream of the final mix (used by the promo director to record trailers). */
+  captureStream() {
+    if (!this.ctx) return null;
+    if (!this.tap) {
+      this.tap = this.ctx.createMediaStreamDestination();
+      this.master.connect(this.tap);
+    }
+    return this.tap.stream;
+  }
+
   /** Load public/voice/manifest.json so voice() knows which clips exist. */
   async loadVoices(base = 'voice/') {
     this.voiceBase = base;
