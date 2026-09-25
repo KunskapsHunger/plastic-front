@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Plastic Front</title>
+  <meta name="description" content="A peer-to-peer toy-soldier factory war. You build the machine. The machine builds the army. Service guarantees bedtime." />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23c8352b'/%3E%3Cpath d='M32 10l6 17h18l-14 10 5 17-15-10-15 10 5-17L8 27h18z' fill='%23f3e6c8'/%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Bangers&family=Oswald:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="src/styles.css" />
+  <script src="vendor/peerjs.min.js" defer></script>
+</head>
+<body>
+  <canvas id="world"></canvas>
+
+  <div id="hud" hidden>
+    <header id="topbar">
+      <div class="purse">
+        <div class="res req" title="Requisition: builds things. Earned over time, from kills, and from War Bonds (belt anything into your HQ)."><i>R</i><b id="r-req">0</b><small id="r-req-rate"></small></div>
+        <div class="res glory" title="Glory: buys Citizenship Programs (research). Earned from kills. Also from heroic losses."><i>★</i><b id="r-glory">0</b></div>
+        <div class="res scrap" title="Scrap: the plastic of the fallen, waiting for a Reclaimer."><i>♻</i><b id="r-scrap">0</b></div>
+      </div>
+      <div id="ticker"><span class="net">FPN</span><div class="track"><span id="ticker-text"></span></div></div>
+      <div class="purse right">
+        <div class="res army" title="Soldiers in the field"><i>⚑</i><b id="r-army">0</b></div>
+        <div class="res heroes" title="Heroes recycled (your casualties)"><i>✝</i><b id="r-heroes">0</b></div>
+        <button class="chip" id="btn-research" title="Citizenship Programs (T)">★ PROGRAMS</button>
+        <button class="chip icon" id="btn-mute" title="Mute (M)">♪</button>
+        <button class="chip icon" id="btn-menu" title="Menu (Esc)">☰</button>
+      </div>
+    </header>
+
+    <aside id="lanes"></aside>
+    <aside id="inspector" hidden></aside>
+    <aside id="manual"></aside>
+    <div id="wave-banner" hidden></div>
+    <nav id="buildbar"></nav>
+    <div id="minimap-wrap"><canvas id="minimap"></canvas></div>
+    <div id="toasts"></div>
+    <div id="tooltip" hidden></div>
+
+    <section id="research" class="modal" hidden></section>
+    <section id="pause" class="modal" hidden></section>
+    <section id="gameover" class="modal" hidden></section>
+    <div id="desync" hidden>Peers out of sync. The war continues, but reality may differ between screens.</div>
+  </div>
+
+  <div id="screens"></div>
+
+  <script type="module" src="src/main.js"></script>
+</body>
+</html>

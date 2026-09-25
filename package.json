@@ -1,0 +1,17 @@
+{
+  "name": "plastic-front",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Plastic Front — a peer-to-peer toy-soldier factory war. You build the machine. The machine builds the army.",
+  "scripts": {
+    "dev": "node tools/serve.mjs",
+    "build": "node tools/build.mjs",
+    "preview": "node tools/serve.mjs dist",
+    "test": "node --test \"tests/**/*.test.js\"",
+    "test:coverage": "node --test --experimental-test-coverage --test-coverage-exclude=\"tests/**\" \"tests/**/*.test.js\""
+  },
+  "dependencies": {
+    "peerjs": "^1.5.5"
+  }
+}
