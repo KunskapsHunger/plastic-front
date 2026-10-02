@@ -2,6 +2,9 @@
 
 *Service guarantees bedtime.*
 
+**▶ Play now: https://kunskapshunger.github.io/plastic-front/** (free in your browser: host a war and send friends
+the invite link)
+
 **Plastic Front** is a peer-to-peer factory war for 1–4 players. You don't command the army. You build the machine
 that makes it. Scoop plastic pellets, tin and bang powder off the playroom floor, belt them through molding presses,
 tinworks and powder mills, and assemble soldiers, wind-up tanks and tin biplanes. Belt the crates into your gates and
@@ -12,6 +15,8 @@ and snapped-off leg stays on the battlefield for the rest of the war. The Federa
 it and is delighted.
 
 ## Play
+
+Play it at **https://kunskapshunger.github.io/plastic-front/**, or run it locally:
 
 ```bash
 npm install
